@@ -28,11 +28,6 @@ def home():
     return render_template('home.html', posts=posts)
 
 
-@app.route("/account")
-def account():
-    return render_template('account.html', title='Account')
-
-
 @app.route("/register", methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
