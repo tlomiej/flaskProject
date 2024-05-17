@@ -63,6 +63,7 @@ def login():
             flash('Login Unsuccessful. Please check emil and password', 'danger')
     return render_template('login.html', title='Login', form=form)
 
+
 @app.route("/logout")
 def logout():
     logout_user()
@@ -81,9 +82,8 @@ def save_picture(form_picture):
         i = Image.open(form_picture)
         i.thumbnail(output_size)
         i.save(picture_path)
-
-
     return picture_fn
+
 
 @app.route("/account",  methods=['GET', 'POST'])
 @login_required
@@ -96,7 +96,7 @@ def account():
             current_user.image_file = picture_file
 
         current_user.username = form.username.data
-        current_user.email= form.email.data
+        current_user.email = form.email.data
         db.session.commit()
         flash('You account has been updated!', 'success')
         return redirect(url_for('account'))
@@ -106,8 +106,4 @@ def account():
 
     image_file = url_for('static', filename='profile_foto/' + current_user.image_file)
     return render_template(
-        'account.html',
-                           title='Account',
-                           image_file=image_file,
-                           form=form)
-
+        'account.html', title='Account', image_file=image_file, form=form)
