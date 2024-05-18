@@ -107,3 +107,8 @@ def account():
     image_file = url_for('static', filename='profile_foto/' + current_user.image_file)
     return render_template(
         'account.html', title='Account', image_file=image_file, form=form)
+
+@app.route("/data/new")
+@login_required
+def new_data():
+    return render_template('create_data.html', title="New data")
