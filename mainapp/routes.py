@@ -1,6 +1,6 @@
 import bcrypt
 import os
-from flask import render_template, url_for, flash, redirect, request
+from flask import render_template, url_for, flash, redirect, request, abort
 from mainapp import app, db, bcrypt
 from mainapp.models import User, Collection
 from mainapp.forms import RegistrationForm, LoginForm, UpdateAccountForm, NewDataForm
@@ -108,10 +108,34 @@ def new_data():
         flash('Add data', 'success')
         return redirect(url_for('home'))
 
-    return render_template('create_data.html', title="New data", form=form)
+
+    return render_template('create_data.html', title="New data", form=form, legend="New data")
 
 
 @app.route("/data/<data_id>")
 def data(data_id):
     data = Collection.query.get_or_404(data_id)
     return render_template('data.html', title=data.title, data=data)
+
+
+@app.route("/data/<data_id>/update", methods=['GET', 'POST'])
+@login_required
+def updatedata(data_id):
+    data = Collection.query.get_or_404(data_id)
+    if(data.author != current_user):
+        abort(403)
+    form = NewDataForm()
+    if form.validate_on_submit():
+        data.title = form.title.data
+        data.content = form.content.data
+        db.session.commit()
+        flash('Data updated!', 'success')
+        return redirect(url_for('data', data_id=data.id))
+
+    elif request.method == 'GET':
+
+        form.title.data =  data.title
+        form.content.data = data.content
+    return render_template('create_data.html', title="Update data", form=form, legend="Update data")
+
+

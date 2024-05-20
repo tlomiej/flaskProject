@@ -5,6 +5,12 @@
             <div class="article-metadata">
               <a class="mr-2" href="#">{{ data.author.username }}</a>
               <small class="text-muted">{{ data.date_created.strftime('%Y-%m-%d') }}</small>
+                 {% if data.author == current_user %}
+                <div>
+                    <a class="btn btn-secondary btn-sm m-1" href="{{ url_for('updatedata', data_id=data.id) }}">Edit</a>
+                <button type="button" class="btn-danger btn-sm m-1">Delete data</button>
+                </div>
+                {% endif %}
             </div>
             <h2 class="article-title">{{ data.title }}</h2>
             <p class="article-content">{{ data.content }}</p>
