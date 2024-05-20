@@ -2,33 +2,21 @@ import bcrypt
 import os
 from flask import render_template, url_for, flash, redirect, request
 from mainapp import app, db, bcrypt
-from mainapp.models import User
-from mainapp.forms import RegistrationForm, LoginForm, UpdateAccountForm
+from mainapp.models import User, Collection
+from mainapp.forms import RegistrationForm, LoginForm, UpdateAccountForm, NewDataForm
 from flask_login import login_user, current_user, logout_user, login_required
 import secrets
 from PIL import Image
 
 
-posts = [
-    {
-        'author': 'Corey Schafer',
-        'title': 'Blog Post 1',
-        'content': 'First post content',
-        'date_posted': 'April 20, 2018'
-    },
-    {
-        'author': 'Jane Doe',
-        'title': 'Blog Post 2',
-        'content': 'Second post content',
-        'date_posted': 'April 21, 2018'
-    }
-]
 
 
 @app.route("/")
 @app.route("/home")
 def home():
-    return render_template('home.html', posts=posts)
+
+    data = Collection.query.all()
+    return render_template('home.html', posts=data)
 
 
 @app.route("/register", methods=['GET', 'POST'])
@@ -108,7 +96,22 @@ def account():
     return render_template(
         'account.html', title='Account', image_file=image_file, form=form)
 
-@app.route("/data/new")
+@app.route("/data/new", methods=['GET', 'POST'])
 @login_required
 def new_data():
-    return render_template('create_data.html', title="New data")
+    form = NewDataForm()
+    if form.validate_on_submit():
+        collections = Collection(title=form.title.data, content=form.content.data, author=current_user)
+        db.session.add(collections)
+        db.session.commit()
+
+        flash('Add data', 'success')
+        return redirect(url_for('home'))
+
+    return render_template('create_data.html', title="New data", form=form)
+
+
+@app.route("/data/<data_id>")
+def data(data_id):
+    data = Collection.query.get_or_404(data_id)
+    return render_template('data.html', title=data.title, data=data)

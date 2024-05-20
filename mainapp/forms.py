@@ -54,12 +54,11 @@ class LoginForm(FlaskForm):
   password = PasswordField('Password', validators=[DataRequired()])
   remember = BooleanField('Remember Me')
 
-  submit = SubmitField(
-      'Login'
-  )
+  submit = SubmitField('Login')
 
-  class NewData(FlaskForm):
+class NewDataForm(FlaskForm):
     title= StringField('Title', validators=[DataRequired()])
     content = TextAreaField('Content', validators=[DataRequired()])
-    submit = SubmitField('Post')
+
+    submit = SubmitField('Add')
 
