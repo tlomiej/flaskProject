@@ -139,3 +139,13 @@ def updatedata(data_id):
     return render_template('create_data.html', title="Update data", form=form, legend="Update data")
 
 
+@app.route("/data/<data_id>/delete", methods=['GET', 'POST'])
+@login_required
+def deletedata(data_id):
+    data = Collection.query.get_or_404(data_id)
+    if(data.author != current_user):
+        abort(403)
+    db.session.delete(data)
+    db.session.commit()
+    flash('Data has been deleted!', 'success')
+    return redirect(url_for('home'))
