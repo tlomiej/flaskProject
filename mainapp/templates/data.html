@@ -3,7 +3,7 @@
         <article class="media content-section">
           <div class="media-body">
             <div class="article-metadata">
-              <a class="mr-2" href="#">{{ data.author.username }}</a>
+              <a class="mr-2" href="{{ url_for('userdata', username=data.author.username)}}">{{ data.author.username }}</a>
               <small class="text-muted">{{ data.date_created.strftime('%Y-%m-%d') }}</small>
                  {% if data.author == current_user %}
                 <div>

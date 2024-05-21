@@ -14,8 +14,10 @@ from PIL import Image
 @app.route("/")
 @app.route("/home")
 def home():
+    page = request.args.get('page', 1, type=int)
+    data = Collection.query.order_by(Collection.date_created.desc()).paginate(page=page, per_page=5)
 
-    data = Collection.query.all()
+    #data = Collection.query.paginate(page=page, per_page=5)
     return render_template('home.html', posts=data)
 
 
@@ -149,3 +151,12 @@ def deletedata(data_id):
     db.session.commit()
     flash('Data has been deleted!', 'success')
     return redirect(url_for('home'))
+
+@app.route("/user/<string:username>")
+def userdata(username):
+    page = request.args.get('page', 1, type=int)
+    user = User.query.filter_by(username=username).first_or_404()
+    data = Collection.query.filter_by(author=user).order_by(Collection.date_created.desc()).paginate(page=page, per_page=5)
+
+    #data = Collection.query.paginate(page=page, per_page=5)
+    return render_template('userdata.html', posts=data, user=user)
