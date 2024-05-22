@@ -3,11 +3,11 @@
         <article class="media content-section">
           <div class="media-body">
             <div class="article-metadata">
-              <a class="mr-2" href="{{ url_for('userdata', username=data.author.username)}}">{{ data.author.username }}</a>
+              <a class="mr-2" href="{{ url_for('users.userdata', username=data.author.username)}}">{{ data.author.username }}</a>
               <small class="text-muted">{{ data.date_created.strftime('%Y-%m-%d') }}</small>
                  {% if data.author == current_user %}
                 <div>
-                    <a class="btn btn-secondary btn-sm m-1" href="{{ url_for('updatedata', data_id=data.id) }}">Edit</a>
+                    <a class="btn btn-secondary btn-sm m-1" href="{{ url_for('datas.updatedata', data_id=data.id) }}">Edit</a>
                 <button type="button" class="btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Delete data</button>
                 </div>
                 {% endif %}
@@ -32,7 +32,7 @@
               <div class="modal-footer">
 
                 <button type="button" class="btn btn-primary">Close</button>
-                <form action="{{ url_for('deletedata', data_id=data.id)}}" method="POST">
+                <form action="{{ url_for('datas.deletedata', data_id=data.id)}}" method="POST">
                   <input class="btn btn-danger" type="submit" value="Delete">
                 </form>
               </div>
