@@ -12,12 +12,12 @@ from flask import Blueprint
 datas = Blueprint('datas', __name__)
 
 @datas.route("/data")
-def data():
+def dataall():
     page = request.args.get('page', 1, type=int)
     data = Collection.query.order_by(Collection.date_created.desc()).paginate(page=page, per_page=5)
 
     #data = Collection.query.paginate(page=page, per_page=5)
-    return render_template('data.html', posts=data)
+    return render_template('datas.html', posts=data)
 
 
 
@@ -32,7 +32,7 @@ def new_data():
         db.session.commit()
 
         flash('Add data', 'success')
-        return redirect(url_for('main.home'))
+        return redirect(url_for('data.new'))
 
 
     return render_template('create_data.html', title="New data", form=form, legend="New data")
