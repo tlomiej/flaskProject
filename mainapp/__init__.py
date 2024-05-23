@@ -14,11 +14,7 @@ login_manager.login_message_category = 'info'
 login_manager.login_view = 'users.login'
 login_manager.login_message_category = 'info'
 
-
-
 mail = Mail()
-
-
 
 def create_app(config_class=Config):
     app = Flask(__name__)
@@ -33,10 +29,12 @@ def create_app(config_class=Config):
     from mainapp.users.routes import users
     from mainapp.datas.routes import datas
     from mainapp.main.routes import main
+    from mainapp.errors.handlers import errors
 
     app.register_blueprint(users)
     app.register_blueprint(datas)
     app.register_blueprint(main)
+    app.register_blueprint(errors)
 
     return app
 
