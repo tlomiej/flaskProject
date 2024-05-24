@@ -1,5 +1,3 @@
-import bcrypt
-import os
 from flask import render_template, url_for, flash, redirect, request, abort
 from mainapp import db
 from mainapp.models import User, Collection

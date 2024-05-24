@@ -16,6 +16,7 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(60), nullable=False)
 
     collection = db.relationship('Collection', backref='author', lazy=True)
+    forms = db.relationship('Forms', backref='author', lazy=True)
 
     def get_reset_token(self, expires_sec=1800):
         s = Serializer(current_app.config['SECRET_KEY'], expires_sec)
@@ -46,4 +47,16 @@ class Collection(db.Model, UserMixin):
 
     def __repr__(self):
         return f"Data('{self.user_id}', '{self.title}', '{self.image_file}')"
+
+
+class Forms(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    title = db.Column(db.String(180), nullable=False)
+    form = db.Column(db.String(6000), nullable=False)
+    date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+
+
+    def __repr__(self):
+        return f"Data('{self.user_id}', '{self.title}')"
 

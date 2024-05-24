@@ -30,11 +30,14 @@ def create_app(config_class=Config):
     from mainapp.datas.routes import datas
     from mainapp.main.routes import main
     from mainapp.errors.handlers import errors
+    from mainapp.forms.routes import forms
+
 
     app.register_blueprint(users)
     app.register_blueprint(datas)
     app.register_blueprint(main)
     app.register_blueprint(errors)
+    app.register_blueprint(forms)
 
     return app
 
