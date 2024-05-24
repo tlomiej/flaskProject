@@ -3,7 +3,7 @@ import json
 from flask import Blueprint
 from flask_login import login_required,current_user
 from mainapp.forms.forms import NewForm
-from mainapp.forms.utils import create_form_class
+from mainapp.forms.utils import create_form_class, combine_data
 from mainapp import db
 
 
@@ -79,10 +79,13 @@ def form_add(id):
 
 @forms.route("/forms/<id>/table", methods=['GET', 'POST'])
 def form_table(id):
+    form = Forms.query.filter_by(id=id).first()
+    form_data = json.loads(form.form)
     data = Formsdata.query.filter_by(form_id=id).all()
-    print(data)
 
-
-    return render_template('formview.html', title='Form', form=data)
+    d = []
+    for x in data:
+        d.append(combine_data(x.data, form_data['fields']))
+    return render_template('formview.html', title='Form', form=d)
 
 

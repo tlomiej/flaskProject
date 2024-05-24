@@ -61,7 +61,7 @@ class Forms(db.Model, UserMixin):
 
 
     def __repr__(self):
-        return f"Data('{self.user_id}', '{self.title}')"
+        return f"Data('{self.user_id}', '{self.title}', '{self.form}')"
 
 
 class Formsdata(db.Model, UserMixin):

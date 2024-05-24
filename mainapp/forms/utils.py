@@ -1,6 +1,8 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired
+import json
+import copy
 
 
 def create_form_class(form_definition):
@@ -24,3 +26,10 @@ def create_form_class(form_definition):
     setattr(DynamicForm, 'submit', SubmitField(form_definition['submit']['label']))
 
     return DynamicForm
+
+
+def combine_data(x, m):
+    xj = json.loads(x)
+    for z in m:
+        z['value'] = xj.get(z['name'])
+    return copy.deepcopy(m)

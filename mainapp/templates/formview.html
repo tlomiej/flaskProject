@@ -1,18 +1,18 @@
 {% extends "layout.html" %}
 {% block content%}
-    <div class="content-section">
-       lista form
-
-            {% for data in form %}
-
-        {{data}}
-        <article class="media content-section">
-          <div class="media-body">
-           TEST
-          </div>
-        </article>
+            {% for f in form %}
+                <article class="media content-section">
+                  <div class="media-body">
+                       {% for field in f %}
+                            <div class="form-group">
+                                <label class="form-control-label">{{ field['label'] }}</label>
+                                <input type="text" class="form-control form-control-lg" value="{{ field['value'] }}">
+                            </div>
+                      {% endfor %}
+                  </div>
+                </article>
     {% endfor %}
 
-    </div>
+
 
 {% endblock content%}
