@@ -1,6 +1,6 @@
 from flask import render_template, url_for, flash, redirect, request, abort
 from mainapp import db
-from mainapp.models import User, Collection
+from mainapp.models import  Collection
 from mainapp.datas.forms import NewDataForm
 from flask_login import current_user, login_required
 
