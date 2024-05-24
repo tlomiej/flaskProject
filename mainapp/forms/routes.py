@@ -51,8 +51,8 @@ def new_form():
 
 @forms.route("/forms/<id>", methods=['GET', 'POST'])
 def form_view(id):
-    #TODO find form by
-    return render_template('form_root.html', title='Form', id=id)
+    count = Formsdata.query.filter_by(form_id=id).count()
+    return render_template('form_root.html', title='Form', id=id, count=count)
 
 
 @forms.route("/forms/<id>/new", methods=['GET', 'POST'])
