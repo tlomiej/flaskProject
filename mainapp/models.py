@@ -54,6 +54,7 @@ class Forms(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     title = db.Column(db.String(180), nullable=False)
+    description = db.Column(db.String(1800), nullable=True)
     form = db.Column(db.String(6000), nullable=False)
     date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 

@@ -37,7 +37,7 @@ def new_form():
 
 
     if form.validate_on_submit():
-        collections = Forms(title=form.title.data, form=form.form.data, author=current_user)
+        collections = Forms(title=form.title.data, description=form.form.description, form=form.form.data, author=current_user)
         db.session.add(collections)
         db.session.commit()
 
