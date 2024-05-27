@@ -3,6 +3,8 @@
     <div class="content-section">
         <h1>{{form.title}}</h1>
         <p>{{form.description}}</p>
+        <br>
+        <br>
         <h4>Record count: <span class="bold-text">{{count}}</span></h4>
         <br>
         <a class="btn btn-secondary btn-sm m-1" href="{{ url_for('forms.form_add', id=id) }}">Add data</a>
