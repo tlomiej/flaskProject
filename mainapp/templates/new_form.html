@@ -20,10 +20,10 @@
                 </div>
                 <div class="form-group">
                     {{ form.description.label(class="form-control-label") }}
-                    {% if form.descryption.errors %}
-                        {{ form.descryption(class="form-control form-control-lg is-invalid") }}
+                    {% if form.description.errors %}
+                        {{ form.description(class="form-control form-control-lg is-invalid") }}
                         <div class="invalid-feedback">
-                            {% for error in form.descryption.errors %}
+                            {% for error in form.description.errors %}
                                 <span>{{ error }}</span>
                             {% endfor %}
                         </div>

@@ -37,14 +37,14 @@ def new_form():
 
 
     if form.validate_on_submit():
-        collections = Forms(title=form.title.data, description=form.form.description, form=form.form.data, author=current_user)
+        collections = Forms(title=form.title.data, description=form.description.data, form=form.form.data, author=current_user)
         db.session.add(collections)
         db.session.commit()
 
         flash('Form created!', 'success')
         return redirect(url_for('forms.form'))
 
-    return render_template('new_form.html', title='Form', form=form)
+    return render_template('new_form.html', title='Form',legend='New Form', form=form)
 
 
 
@@ -52,7 +52,8 @@ def new_form():
 @forms.route("/forms/<id>", methods=['GET', 'POST'])
 def form_view(id):
     count = Formsdata.query.filter_by(form_id=id).count()
-    return render_template('form_root.html', title='Form', id=id, count=count)
+    form = Forms.query.with_entities(Forms.title, Forms.description).filter_by(id=id).first()
+    return render_template('form_root.html', title='Form', form=form, id=id, count=count)
 
 
 @forms.route("/forms/<id>/new", methods=['GET', 'POST'])

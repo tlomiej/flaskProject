@@ -1,7 +1,9 @@
 {% extends "layout.html" %}
 {% block content%}
     <div class="content-section">
-        <h3>Record count: <span class="bold-text">{{count}}</span></h3>
+        <h1>{{form.title}}</h1>
+        <p>{{form.description}}</p>
+        <h4>Record count: <span class="bold-text">{{count}}</span></h4>
         <br>
         <a class="btn btn-secondary btn-sm m-1" href="{{ url_for('forms.form_add', id=id) }}">Add data</a>
         <a class="btn btn-secondary btn-sm m-1" href="{{ url_for('forms.form_table', id=id) }}">View data</a>

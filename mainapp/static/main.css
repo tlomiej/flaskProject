@@ -2,18 +2,20 @@ body {
   background: #fafafa;
   color: #333333;
   margin-top: 5rem;
+  font-family: 'Courier New';
 }
+
 
 h1, h2, h3, h4, h5, h6 {
   color: #444444;
 }
 
 .bg-steel {
-  background-color: #5f788a;
+  background-color: #FFA62F;
 }
 
 .site-header .navbar-nav .nav-link {
-  color: #cbd5db;
+  color: #FFE8C8;
 }
 
 .site-header .navbar-nav .nav-link:hover {
