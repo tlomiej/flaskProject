@@ -1,8 +1,9 @@
 import json
 
-from flask import Blueprint
+
+from flask import Blueprint, request, abort
 from flask_login import login_required,current_user
-from mainapp.forms.forms import NewForm
+from mainapp.forms.forms import NewForm, EditForm
 from mainapp.forms.utils import create_form_class, combine_data
 from mainapp import db
 
@@ -77,6 +78,30 @@ def form_add(id):
         return redirect(url_for('forms.form_view', id=id))
     return render_template('form.html', title='Form', form=form, form_config=form_definition)
 
+@forms.route("/forms/<id>/edit", methods=['GET', 'POST'])
+@login_required
+def form_edit(id):
+    data = Forms.query.filter_by(id=id).first_or_404()
+
+    if data.author != current_user:
+        abort(403)
+
+    form = EditForm()
+    if form.validate_on_submit():
+        data.title = form.title.data
+        data.description = form.description.data
+        data.form = form.form.data
+        db.session.commit()
+        flash('Form updated!', 'success')
+        return redirect(url_for('forms.form_view', id=id))
+
+    elif request.method == 'GET':
+
+        form.title.data =  data.title
+        form.description.data = data.description
+        form.form.data = data.form
+
+    return render_template('new_form.html', title='Form', legend='Edit Form', form=form)
 
 @forms.route("/forms/<id>/table", methods=['GET', 'POST'])
 def form_table(id):

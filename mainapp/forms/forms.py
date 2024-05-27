@@ -9,3 +9,11 @@ class NewForm(FlaskForm):
     form = TextAreaField('Form', validators=[DataRequired()])
 
     submit = SubmitField('Create')
+
+
+class EditForm(FlaskForm):
+    title = StringField('Title', validators=[DataRequired()])
+    description = StringField('Description', validators=[DataRequired()])
+    form = TextAreaField('Form', validators=[DataRequired()])
+
+    submit = SubmitField('Update')
