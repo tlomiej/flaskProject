@@ -110,6 +110,7 @@ def form_delete(id):
     if data.author != current_user:
         abort(403)
     db.session.delete(data)
+    Formsdata.query.filter_by(form_id=id).delete()
     db.session.commit()
     flash(f'Form has been deleted! [{id}]', 'success')
     return redirect(url_for('forms.form'))
