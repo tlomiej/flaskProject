@@ -24,18 +24,6 @@ def form():
 def new_form():
     form = NewForm()
 
-    form.form.data = '''
-    {
-        "fields": [
-            {"name": "title", "type": "StringField", "label": "Title 1666", "validators": ["DataRequired"]},
-            {"name": "content", "type": "TextAreaField", "label": "Content1666", "validators": ["DataRequired"]},
-            {"name": "x", "type": "TextAreaField", "label": "X", "validators": ["DataRequired"]},
-            {"name": "y", "type": "TextAreaField", "label": "Y", "validators": ["DataRequired"]}
-        ],
-        "submit": {"label": "Add"}
-    }
-    '''
-
 
     if form.validate_on_submit():
         collections = Forms(title=form.title.data, description=form.description.data, form=form.form.data, author=current_user)
@@ -44,6 +32,18 @@ def new_form():
 
         flash('Form created!', 'success')
         return redirect(url_for('forms.form'))
+    elif request.method == 'GET':
+        form.form.data = '''
+        {
+            "fields": [
+                {"name": "title", "type": "StringField", "label": "Title 1666", "validators": ["DataRequired"]},
+                {"name": "content", "type": "TextAreaField", "label": "Content1666", "validators": ["DataRequired"]},
+                {"name": "x", "type": "TextAreaField", "label": "X", "validators": ["DataRequired"]},
+                {"name": "y", "type": "TextAreaField", "label": "Y", "validators": ["DataRequired"]}
+            ],
+            "submit": {"label": "Add"}
+        }
+        '''
 
     return render_template('new_form.html', title='Form',legend='New Form', form=form)
 
@@ -102,6 +102,17 @@ def form_edit(id):
         form.form.data = data.form
 
     return render_template('new_form.html', title='Form', legend='Edit Form', form=form)
+@forms.route("/forms/<id>/delete", methods=['GET', 'POST'])
+@login_required
+def form_delete(id):
+    data = Forms.query.filter_by(id=id).first_or_404()
+
+    if data.author != current_user:
+        abort(403)
+    db.session.delete(data)
+    db.session.commit()
+    flash(f'Form has been deleted! [{id}]', 'success')
+    return redirect(url_for('forms.form'))
 
 @forms.route("/forms/<id>/table", methods=['GET', 'POST'])
 def form_table(id):

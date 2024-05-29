@@ -1,7 +1,11 @@
 {% extends "layout.html" %}
 {% block content%}
     <div class="content-section">
-        <h1> <a class="btn btn-secondary btn-sm m-1" href="{{ url_for('forms.form_edit', id=id) }}">Edit</a>{{form.title}}</h1>
+        <p>
+            <a class="btn btn-secondary btn-sm m-1" href="{{ url_for('forms.form_edit', id=id) }}">Edit</a>
+             <button type="button" class="btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Delete form</button>
+        </p>
+        <h1>{{form.title}}</h1>
         <p>{{form.description}}</p>
         <br>
         <br>
@@ -10,4 +14,25 @@
         <a class="btn btn-secondary btn-sm m-1" href="{{ url_for('forms.form_add', id=id) }}">Add data</a>
         <a class="btn btn-secondary btn-sm m-1" href="{{ url_for('forms.form_table', id=id) }}">View data</a>
     </div>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Delete form?</h5>
+              </div>
+              <div class="modal-body">
+               <p>Form name: <b>{{form.title}}</b></p>
+                  <p>Record: <b>{{count}}</b></p>
+              </div>
+              <div class="modal-footer">
+
+                <form action="{{ url_for('forms.form_delete', id=id)}}" method="POST">
+                  <input class="btn btn-danger" type="submit" value="Delete">
+                </form>
+                   <button type="button" data-dismiss="modal" class="btn">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
 {% endblock content%}
