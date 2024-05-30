@@ -19,8 +19,6 @@ def form():
     data = Forms.query.all()
     f = request.args.get('type')
     if f and f.upper() == 'JSON':
-        #for  x in data:
-        #    print(json.dumps(x))
         return jsonify({'data': {}})
 
     return render_template('forms.html', title='Forms', data=data)
