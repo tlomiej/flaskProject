@@ -1,7 +1,7 @@
 import json
 
 
-from flask import Blueprint, request, abort
+from flask import Blueprint, request, abort, jsonify
 from flask_login import login_required,current_user
 from mainapp.forms.forms import NewForm, EditForm
 from mainapp.forms.utils import create_form_class, combine_data
@@ -17,6 +17,12 @@ forms = Blueprint('forms', __name__)
 @forms.route("/forms", methods=['GET', 'POST'])
 def form():
     data = Forms.query.all()
+    f = request.args.get('type')
+    if f and f.upper() == 'JSON':
+        #for  x in data:
+        #    print(json.dumps(x))
+        return jsonify({'data': {}})
+
     return render_template('forms.html', title='Forms', data=data)
 
 @forms.route("/newform", methods=['GET', 'POST'])
