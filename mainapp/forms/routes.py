@@ -27,8 +27,6 @@ def form():
 @login_required
 def new_form():
     form = NewForm()
-
-
     if form.validate_on_submit():
         collections = Forms(title=form.title.data, description=form.description.data, form=form.form.data, author=current_user)
         db.session.add(collections)
