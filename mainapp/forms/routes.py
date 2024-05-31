@@ -4,7 +4,7 @@ import json
 from flask import Blueprint, request, abort, jsonify
 from flask_login import login_required,current_user
 from mainapp.forms.forms import NewForm, EditForm
-from mainapp.forms.utils import create_form_class, combine_data
+from mainapp.forms.utils import create_form_class, combine_data, return_json, check_type_json, return_data
 from mainapp import db
 
 
@@ -19,11 +19,9 @@ forms = Blueprint('forms', __name__)
 @forms.route("/forms", methods=['GET', 'POST'])
 def form():
     data = Forms.query.all()
+    return return_data(data, request.args.get('type'),
+                       render_template('forms.html', title='Forms', data=data))
 
-    f = request.args.get('type')
-    if f and f.upper() == 'JSON':
-        return jsonify([user.to_dict() for user in data])
-    return render_template('forms.html', title='Forms', data=data)
 
 @forms.route("/newform", methods=['GET', 'POST'])
 @login_required
@@ -60,6 +58,11 @@ def new_form():
 def form_view(id):
     count = Formsdata.query.filter_by(form_id=id).count()
     form = Forms.query.with_entities(Forms.title, Forms.description).filter_by(id=id).first()
+
+    if check_type_json( request.args.get('type')):
+        return jsonify({'count': count, 'form': {'title':form.title,
+                                                 'description': form.description
+        }})
     return render_template('form_root.html', title='Form', form=form, id=id, count=count)
 
 

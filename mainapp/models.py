@@ -78,6 +78,15 @@ class Formsdata(db.Model, UserMixin):
     data = db.Column(db.String(8000), nullable=False)
     date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
+    def to_dict(self):
+            return {
+                'id': self.id,
+                'user_id': self.user_id,
+                'form_id': self.form_id,
+                'data': self.data,
+                'date_created': self.date_created
+            }
+
 
     def __repr__(self):
         return f"Data('{self.form_id}, {self.data}')"

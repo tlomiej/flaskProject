@@ -3,6 +3,7 @@ from wtforms import StringField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired
 import json
 import copy
+from flask import request, jsonify
 
 
 def create_form_class(form_definition):
@@ -33,3 +34,20 @@ def combine_data(x, m):
     for z in m:
         z['value'] = xj.get(z['name'])
     return copy.deepcopy(m)
+
+
+def check_type_json(type):
+    if type and type.upper() == 'JSON':
+        return True
+    else:
+        return False
+
+
+def return_json(data):
+    return jsonify([user.to_dict() for user in data])
+
+
+def return_data(data, type, render):
+    if check_type_json(type):
+        return return_json(data)
+    return render
