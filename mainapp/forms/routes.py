@@ -14,12 +14,17 @@ from mainapp.models import Forms, Formsdata
 
 forms = Blueprint('forms', __name__)
 
+
+
 @forms.route("/forms", methods=['GET', 'POST'])
 def form():
     data = Forms.query.all()
+
     f = request.args.get('type')
     if f and f.upper() == 'JSON':
-        return jsonify({'data': {}})
+
+        return json.dumps([(dict(row.items())) for row in Forms])
+        #return json.dumps(data, cls=new_alchemy_encoder(), check_circular=False)
 
     return render_template('forms.html', title='Forms', data=data)
 

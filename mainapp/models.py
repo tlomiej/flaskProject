@@ -62,9 +62,6 @@ class Forms(db.Model, UserMixin):
     #formsdata = db.relationship('Formsdata', backref='form', lazy=True)
 
 
-    def __repr__(self):
-        return f"Data('{self.user_id}', '{self.title}', '{self.form}')"
-
 
 class Formsdata(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
