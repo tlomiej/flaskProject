@@ -60,8 +60,16 @@ class Forms(db.Model, UserMixin):
     date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
     #formsdata = db.relationship('Formsdata', backref='form', lazy=True)
-
-
+    #
+    def to_dict(self):
+            return {
+                'id': self.id,
+                'user_id': self.user_id,
+                'title': self.title,
+                'description': self.description,
+                'form': self.form,
+                'date_created': self.date_created
+            }
 
 class Formsdata(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)

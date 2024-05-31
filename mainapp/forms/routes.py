@@ -22,10 +22,7 @@ def form():
 
     f = request.args.get('type')
     if f and f.upper() == 'JSON':
-
-        return json.dumps([(dict(row.items())) for row in Forms])
-        #return json.dumps(data, cls=new_alchemy_encoder(), check_circular=False)
-
+        return jsonify([user.to_dict() for user in data])
     return render_template('forms.html', title='Forms', data=data)
 
 @forms.route("/newform", methods=['GET', 'POST'])

@@ -18,6 +18,7 @@
             <div class="navbar-nav mr-auto">
                 <a class="nav-item nav-link" href="{{ url_for('forms.form') }}">Forms</a>
                 <a class="nav-item nav-link" href="{{ url_for('forms.new_form') }}">New form</a>
+                <a class="nav-item nav-link" href="javascript:void(0);" title="Display JSON" onclick="addJsonParam()">JSON</a>
             </div>
             <!-- Navbar Right Side -->
             <div class="navbar-nav">
@@ -47,6 +48,14 @@
 
     {% block content %}{% endblock %}
 </div>
+
+  <script>
+        function addJsonParam() {
+            const url = new URL(window.location.href);
+            url.searchParams.set('type', 'json');
+            window.location.href = url.href;
+        }
+    </script>
 
 
     <!-- Optional JavaScript -->
