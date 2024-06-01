@@ -24,8 +24,36 @@ def form():
 
 
 @forms.route("/newform", methods=['GET', 'POST'])
-@login_required
+# @login_required
 def new_form():
+    if check_type_json(request.args.get('type')):
+        if request.method == 'GET':
+            return jsonify({'message': 'Use POST method!'}), 400
+
+        if request.content_type != 'application/json':
+            return jsonify({'message': 'Content-Type must be application/json'}), 415
+
+        try:
+            json_data = request.get_json()
+            if not json_data or not 'title' in json_data or not 'description' in json_data:
+                return jsonify({'message': 'Invalid input'}), 400
+
+            print(json_data)
+
+            #collections = Forms(title=json_data.title, description=json_data.description, form=json_data.form,
+            #                    author=current_user)
+            #db.session.add(collections)
+            #db.session.commit()
+
+        except Exception as e:
+            return jsonify({'message': 'Invalid JSON', 'error': str(e)}), 400
+
+
+
+        return jsonify({'message': 'Ok' }), 200
+
+
+
     form = NewForm()
     if form.validate_on_submit():
         collections = Forms(title=form.title.data, description=form.description.data, form=form.form.data, author=current_user)
@@ -131,8 +159,6 @@ def form_table(id):
     d = []
     for x in data:
         d.append(combine_data(x.data, form_data['fields']))
-
-
 
     if check_type_json(request.args.get('type')):
         return jsonify({'form': d })
