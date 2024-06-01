@@ -38,8 +38,8 @@ def new_form():
         form.form.data = '''
         {
             "fields": [
-                {"name": "title", "type": "StringField", "label": "Title 1666", "validators": ["DataRequired"]},
-                {"name": "content", "type": "TextAreaField", "label": "Content1666", "validators": ["DataRequired"]},
+                {"name": "title", "type": "StringField", "label": "Title", "validators": ["DataRequired"]},
+                {"name": "content", "type": "TextAreaField", "label": "Content", "validators": ["DataRequired"]},
                 {"name": "x", "type": "TextAreaField", "label": "X", "validators": ["DataRequired"]},
                 {"name": "y", "type": "TextAreaField", "label": "Y", "validators": ["DataRequired"]}
             ],
@@ -57,8 +57,8 @@ def form_view(id):
     count = Formsdata.query.filter_by(form_id=id).count()
     form = Forms.query.with_entities(Forms.title, Forms.description).filter_by(id=id).first()
 
-    if check_type_json( request.args.get('type')):
-        return jsonify({'count': count, 'form': {'title':form.title,
+    if check_type_json(request.args.get('type')):
+        return jsonify({'count': count, 'form': {'title': form.title,
                                                  'description': form.description
         }})
     return render_template('form_root.html', title='Form', form=form, id=id, count=count)
@@ -131,6 +131,11 @@ def form_table(id):
     d = []
     for x in data:
         d.append(combine_data(x.data, form_data['fields']))
+
+
+
+    if check_type_json(request.args.get('type')):
+        return jsonify({'form': d })
     return render_template('formview.html', title='Form', form=d)
 
 
