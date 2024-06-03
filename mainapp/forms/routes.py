@@ -89,16 +89,36 @@ def form_view(id):
 @forms.route("/forms/<id>/new", methods=['GET', 'POST'])
 @login_required
 def form_add(id):
+    if check_type_json(request.args.get('type')):
+        if request.method == 'GET':
+            return jsonify({'message': 'Use POST method!'}), 400
+
+        if request.content_type != 'application/json':
+            return jsonify({'message': 'Content-Type must be application/json'}), 415
+
+        try:
+            json_data = request.get_json()
+            if not json_data or not 'data' in json_data:
+                return jsonify({'message': 'Invalid input'}), 400
+
+            formdata = Formsdata(data=json.dumps(json_data.get('data')), form_id=id, author=current_user)
+            db.session.add(formdata)
+            db.session.commit()
+
+            return jsonify({'message': f'Add new row in form: {id}'}), 201
+
+        except Exception as e:
+            return jsonify({'message': 'Invalid JSON', 'error': str(e)}), 400
+
+
     data = Forms.query.filter_by(id=id).first_or_404()
-    form_definition = json.loads(data.form)
+    form_definition = json.loads(data.form.replace("'", '"'))
     dynamicForm = create_form_class(form_definition)
     form = dynamicForm()
-
 
     if form.validate_on_submit():
         form_data = {field.name: field.data for field in form if field.name not in ('csrf_token', 'submit') }
         form_data_json = json.dumps(form_data)
-
         formdata = Formsdata(data=form_data_json, form_id=id, author=current_user)
         db.session.add(formdata)
         db.session.commit()

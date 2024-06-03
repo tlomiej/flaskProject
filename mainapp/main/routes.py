@@ -1,13 +1,6 @@
 from flask import render_template, request, jsonify
 
 from mainapp.forms.utils import check_type_json
-from mainapp.models import User, Collection
-
-
-
-
-
-
 
 from flask import Blueprint
 
