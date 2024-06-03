@@ -19,6 +19,14 @@ class User(db.Model, UserMixin):
     forms = db.relationship('Forms', backref='author', lazy=True)
     formsdata = db.relationship('Formsdata', backref='author', lazy=True)
 
+
+    def to_dict(self):
+            return {
+                'id': self.id,
+                'username': self.username,
+                'email': self.email
+            }
+
     #def get_reset_token(self, expires_sec=1800):
         #s = Serializer(current_app.config['SECRET_KEY'], expires_sec)
         #return s.dumps({'user_id': self.id}).decode('utf-8')

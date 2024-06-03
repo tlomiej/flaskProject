@@ -1,8 +1,9 @@
-from flask import Blueprint
+from flask import Blueprint, jsonify
 
 import bcrypt
 from flask import render_template, url_for, flash, redirect, request, abort
 from mainapp import db, bcrypt
+from mainapp.forms.utils import check_type_json
 from mainapp.models import User, Collection
 from mainapp.users.forms import (RegistrationForm,
                            LoginForm,
@@ -33,6 +34,22 @@ def register():
 
 @users.route("/login", methods=['GET', 'POST'])
 def login():
+    if check_type_json(request.args.get('type')):
+        print()
+
+        data = request.get_json()
+        username = data.get('username')
+        password = data.get('password')
+        remember = data.get('remember')
+        user = User.query.filter_by(username=username).first()
+
+        if user and bcrypt.check_password_hash(user.password, password):
+            login_user(user, remember=remember)
+            return jsonify({'message': 'Logged in successfully'}), 200
+        return jsonify({'message': 'Invalid credentials'}), 401
+
+
+
     if current_user.is_authenticated:
         return redirect(url_for('main.home'))
 
