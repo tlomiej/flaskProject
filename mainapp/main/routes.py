@@ -1,4 +1,6 @@
-from flask import render_template, request
+from flask import render_template, request, jsonify
+
+from mainapp.forms.utils import check_type_json
 from mainapp.models import User, Collection
 
 
@@ -14,10 +16,9 @@ main = Blueprint('main', __name__)
 @main.route("/")
 @main.route("/home")
 def home():
-    page = request.args.get('page', 1, type=int)
-    data = Collection.query.order_by(Collection.date_created.desc()).paginate(page=page, per_page=5)
-
-    #data = Collection.query.paginate(page=page, per_page=5)
-    return render_template('home.html', posts=data)
+    if check_type_json(request.args.get('type')):
+        return jsonify({'title': 'Collect data you want!',
+                        'method': ['seeAvailableForm','addForm']})
+    return render_template('home.html')
 
 
