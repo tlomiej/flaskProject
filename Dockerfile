@@ -11,7 +11,7 @@ COPY requirements.txt requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Skopiuj resztę plików aplikacji do kontenera
-#COPY . .
+COPY . .
 COPY . /app/
 
 # Otwórz port 5000, na którym działa aplikacja Flask
