@@ -167,7 +167,7 @@ def form_delete(id):
 @forms.route("/forms/<id>/table", methods=['GET', 'POST'])
 def form_table(id):
     form = Forms.query.filter_by(id=id).first()
-    form_data = json.loads(form.form)
+    form_data = json.loads(form.form.replace("'", '"'))
     data = Formsdata.query.filter_by(form_id=id).all()
 
     d = []
