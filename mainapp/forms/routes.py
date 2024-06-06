@@ -176,6 +176,6 @@ def form_table(id):
 
     if check_type_json(request.args.get('type')):
         return jsonify({'form': d })
-    return render_template('formview.html', title='Form', form=d)
+    return render_template('formview.html', title='Form', form=d, id=id)
 
 

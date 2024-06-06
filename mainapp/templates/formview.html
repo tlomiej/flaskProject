@@ -1,6 +1,10 @@
 {% extends "layout.html" %}
 {% block content%}
-            {% for f in form %}
+
+<a class="btn btn-secondary btn-sm m-1" href="{{ url_for('forms.form_view', id=id) }}"> <- Return</a>
+<a class="btn btn-secondary btn-sm m-1" href="{{ url_for('forms.form_add', id=id) }}"> + Add new record</a>
+          
+    {% for f in form %}
                 <article class="media content-section">
                     <button>View</button>
                     <button>Edit</button>
