@@ -172,27 +172,29 @@ def form_table(id):
 
     d = []
     for x in data:
-        d.append(combine_data(x.data, form_data['fields']))
+
+        d.append([{"id": x.id}] + combine_data(x.data, form_data['fields']))
 
     if check_type_json(request.args.get('type')):
         return jsonify({'form': d })
-    return render_template('formview.html', title='Form', form=d, id=id,  objectid=form.id)
+    return render_template('formview.html', title='Form', form=d, id=id)
 
 
 @forms.route("/forms/<id>/table/<objectid>", methods=['GET', 'POST'])
 def form_single_item(id, objectid):
-    return f"Form ID: {id}, Object ID: {objectid}"
+    #return f"Form ID: {id}, Object ID: {objectid}"
 
 
     form = Forms.query.filter_by(id=id).first()
     form_data = json.loads(form.form.replace("'", '"'))
-    data = Formsdata.query.filter_by(form_id=id, id=objectid).first_or_404()
+    data = Formsdata.query.filter_by(form_id=id, id=objectid).all()
 
     d = []
-    d.append(combine_data(data, form_data['fields']))
+    for x in data:
+        d.append(combine_data(x.data, form_data['fields']))
 
     if check_type_json(request.args.get('type')):
         return jsonify({'form': d })
-    return render_template('formedit.html', title='Form', form=d, id=id, objectid=objectid)
+    return render_template('formsinglerecord.html', title='Form', form=d, id=id, objectid=objectid)
 
 
