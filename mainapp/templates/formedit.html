@@ -6,7 +6,9 @@
           
     {% for f in form %}
                 <article class="media content-section">
-                    <a class="btn btn-sm m-1" href="{{ url_for('forms.form_single_item', id=id, objectid=objectid) }}">View</a>
+                    <a class="btn btn-sm m-1" href="{{ url_for('forms.form_single_item', id=id, objectid=objectid) }}"> + Add new record</a>
+
+                    <button>View</button>
                     <button>Edit</button>
                   <div class="media-body">
                        {% for field in f %}
