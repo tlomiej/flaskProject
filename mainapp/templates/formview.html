@@ -6,8 +6,9 @@
           
     {% for f in form %}
                 <article class="media content-section">
-                    <a class="btn btn-sm m-1" href="{{ url_for('forms.form_single_item', id=id, objectid=f[0]['id']) }}">View</a>
-                    <button>Edit</button>
+                    <a class="btn btn btn-outline-secondary btn-sm m-1" href="{{ url_for('forms.form_single_item', id=id, objectid=f[0]['id']) }}">View</a>
+                     <a class="btn btn btn-outline-secondary btn-sm m-1" href="{{ url_for('forms.form_single_item_edit', id=id, objectid=f[0]['id']) }}">Edit</a>
+
                   <div class="media-body">
                        {% for field in f[1:] %}
                             <div class="form-group">
