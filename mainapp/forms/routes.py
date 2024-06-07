@@ -1,3 +1,4 @@
+import copy
 import json
 
 
@@ -206,32 +207,27 @@ def form_single_item_edit(id, objectid):
 
     form_data = Formsdata.query.filter_by(form_id=id, id=objectid).first()
 
-
-
     if form.validate_on_submit():
-        form_data = {field.name: field.data for field in form if field.name not in ('csrf_token', 'submit') }
-        form_data_json = json.dumps(form_data)
+        tech_field = ('csrf_token', 'submit')
+        for field in form:
+            if field.name not in tech_field:
+                setattr(form_data, field.name, field.data)
 
+        form_data_json = json.dumps(
+            {field.name: field.data for field in form if field.name not in tech_field})
+        form_data.data = form_data_json
 
-
-        formdata = Formsdata(data=form_data_json, form_id=id, id=objectid, author=current_user)
-        db.session.add(formdata)
         db.session.commit()
 
-        flash('Data add to db!', 'success')
+        flash('Data update in db!', 'success')
         return redirect(url_for('forms.form_view', id=id))
 
     elif request.method == 'GET':
-
 
         for f in form_definition['fields']:
             field_name = f['name']
             field_data = json.loads(form_data.data)
             form[field_name].data = field_data.get(field_name)
-
-    #d = []
-    #for x in data:
-    #    d.append(combine_data(x.data, form_data['fields']))
 
     if check_type_json(request.args.get('type')):
         return jsonify({'info': "TODO" })
