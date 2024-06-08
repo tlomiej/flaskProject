@@ -1,9 +1,11 @@
 {% extends "layout.html" %}
 {% block content%}
+{% import 'formsinglerecordnavigation.html' as macros_single_nav %}
 
 
     <p>FormId : {{id}}</p>
     <p>ObjectID : {{objectid}}</p>
+ {{ macros_single_nav.render_single_row_navt(id, objectid) }}
    <div class="content-section">
         <form method="POST" action="">
             {{ form.hidden_tag() }}

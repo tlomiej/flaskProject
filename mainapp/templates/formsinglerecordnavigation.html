@@ -1,0 +1,4 @@
+
+{% macro render_single_row_navt(id, objectid) %}
+ <a class="btn btn btn-outline-secondary btn-sm m-1" href="{{ url_for('forms.form_single_item', id=id, objectid=objectid) }}">View</a>
+{% endmacro %}
