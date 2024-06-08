@@ -183,9 +183,6 @@ def form_table(id):
 
 @forms.route("/forms/<id>/table/<objectid>", methods=['GET', 'POST'])
 def form_single_item(id, objectid):
-    #return f"Form ID: {id}, Object ID: {objectid}"
-
-
     form = Forms.query.filter_by(id=id).first()
     form_data = json.loads(form.form.replace("'", '"'))
     data = Formsdata.query.filter_by(form_id=id, id=objectid).all()
@@ -196,7 +193,7 @@ def form_single_item(id, objectid):
 
     if check_type_json(request.args.get('type')):
         return jsonify({'form': d })
-    return render_template('formsinglerecord.html', title='Form', form=d, id=id, objectid=objectid)
+    return render_template('formsinglerecord.html', title='Form', form=d, id=id, objectid=objectid, meta=data)
 
 @forms.route("/forms/<id>/table/<objectid>/edit", methods=['GET', 'POST'])
 def form_single_item_edit(id, objectid):
@@ -230,7 +227,7 @@ def form_single_item_edit(id, objectid):
             form[field_name].data = field_data.get(field_name)
 
     if check_type_json(request.args.get('type')):
-        return jsonify({'info': "TODO" })
+        return jsonify({'info': "TODO"})
     return render_template('formsinglerecordedit.html', title='Form', form=form, form_config=form_definition, id=id, objectid=objectid)
 
 

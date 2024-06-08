@@ -2,8 +2,14 @@
 {% block content%}
 
     {% for f in form %}
-    <p>FormId : {{id}}</p>
-    <p>ObjectID : {{objectid}}</p>
+<div class="d-flex justify-content-around p-3">
+    <small class="text-muted">FormId : {{id}}</small>
+    <small class="text-muted">ObjectID : {{objectid}}</small>
+    <small class="text-muted">Created: {{ meta[0].date_created.strftime('%Y-%m-%d') }}</small>
+    <small class="text-muted">Author: {{ meta[0].author.username }}</small>
+</div>
+
+
                 <article class="media content-section">
                   <div class="media-body">
                        {% for field in f %}
