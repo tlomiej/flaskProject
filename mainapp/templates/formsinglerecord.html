@@ -1,9 +1,11 @@
 {% extends "layout.html" %}
 {% block content%}
+{% import 'formsinglerecordnavigation.html' as macros_single_nav %}
+
 
 
     {% for f in form %}
-
+        {{ macros_single_nav.render_single_row_navt(id, objectid) }}
                 {% include 'formsinglerecordnavigation.html' %}
                 <div class="d-flex justify-content-around p-3">
                     <small class="text-muted">FormId : {{id}}</small>
