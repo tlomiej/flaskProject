@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, TextAreaField, RadioField
+from wtforms import StringField, SubmitField, TextAreaField, RadioField, BooleanField
 from wtforms.validators import DataRequired
 import json
 import copy
@@ -20,14 +20,19 @@ def create_form_class(form_definition):
 
         # Dynamically add fields to the form class
         if field_type == "StringField":
-            setattr(DynamicForm, field_name, StringField(field_label, validators=field_validators))
+            setattr(DynamicForm, field_name, StringField(field_label, validators=field_validators,
+                                                         render_kw={"class": "form-control form-control-lg"}))
         elif field_type == "TextAreaField":
-            setattr(DynamicForm, field_name, TextAreaField(field_label, validators=field_validators))
+            setattr(DynamicForm, field_name, TextAreaField(field_label, validators=field_validators,
+                                                           render_kw={"class": "form-control form-control-lg"}))
         elif field_type == "RadioField":
             data_str = field['choices']
             field_choices = [tuple(x) for x in data_str]
             setattr(DynamicForm, field_name, RadioField(field_label, validators=field_validators, choices=field_choices))
-
+        elif field_type == "BooleanField":
+            setattr(DynamicForm, field_name,
+                    BooleanField(field_label,
+                                 render_kw={"class": "form-check-input"}))
 
     # Add submit field
     setattr(DynamicForm, 'submit', SubmitField(form_definition['submit']['label']))
