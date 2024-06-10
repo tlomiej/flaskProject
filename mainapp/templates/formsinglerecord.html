@@ -5,7 +5,7 @@
 
 
     {% for f in form %}
-        {{ macros_single_nav.render_single_row_navt(id, objectid) }}
+        {{ macros_single_nav.render_single_row_nav(id, objectid, 'edit', 'main_form_data') }}
                 {% include 'formsinglerecordnavigation.html' %}
                 <div class="d-flex justify-content-around p-3">
                     <small class="text-muted">FormId : {{id}}</small>

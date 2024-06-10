@@ -5,7 +5,7 @@
 
     <p>FormId : {{id}}</p>
     <p>ObjectID : {{objectid}}</p>
- {{ macros_single_nav.render_single_row_navt(id, objectid) }}
+   {{ macros_single_nav.render_single_row_nav(id, objectid, 'view', 'main_form_data') }}
    <div class="content-section">
         <form method="POST" action="">
             {{ form.hidden_tag() }}

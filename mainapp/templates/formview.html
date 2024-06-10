@@ -1,13 +1,13 @@
 {% extends "layout.html" %}
+{% import 'formsinglerecordnavigation.html' as macros_single_nav %}
 {% block content%}
 
-<a class="btn btn-secondary btn-sm m-1" href="{{ url_for('forms.form_view', id=id) }}"> <- Return</a>
 <a class="btn btn-secondary btn-sm m-1" href="{{ url_for('forms.form_add', id=id) }}"> + Add new record</a>
           
     {% for f in form %}
+
                 <article class="media content-section">
-                    <a class="btn btn btn-outline-secondary btn-sm m-1" href="{{ url_for('forms.form_single_item', id=id, objectid=f[0]['id']) }}">View</a>
-                     <a class="btn btn btn-outline-secondary btn-sm m-1" href="{{ url_for('forms.form_single_item_edit', id=id, objectid=f[0]['id']) }}">Edit</a>
+                    {{ macros_single_nav.render_single_row_nav(id, f[0]['id'], 'all', 'main_form') }}
 
                   <div class="media-body">
                        {% for field in f[1:] %}

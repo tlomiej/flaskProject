@@ -1,5 +1,24 @@
 
-{% macro render_single_row_navt(id, objectid) %}
-<a class="btn btn btn-outline-secondary btn-sm m-1" href="{{ url_for('forms.form_single_item', id=id, objectid=objectid) }}"><-</a>
- <a class="btn btn btn-outline-secondary btn-sm m-1" href="{{ url_for('forms.form_single_item', id=id, objectid=objectid) }}">View</a>
+{% macro render_single_row_nav(id, objectid, mode, home_form='main_form') %}
+
+{{objectid}}
+ <a title="Return to form" class="btn btn btn-outline-secondary btn-sm m-1" href="{{ url_for('forms.form_view', id=id) }}">{% include 'icons/returnreturn.svg' %}
+</a>
+
+    {% if home_form == 'main_form_data' %}
+         <a title="Return to data" class="btn btn btn-outline-secondary btn-sm m-1" href="{{ url_for('forms.form_table', id=id) }}">{% include 'icons/return.svg' %}
+</a>
+    {% endif%}
+
+
+    {% if mode == 'edit' %}
+        <a title="Edit" class="btn btn btn-outline-secondary btn-sm m-1" href="{{ url_for('forms.form_single_item_edit', id=id, objectid=objectid) }}">{% include 'icons/edit.svg' %}
+</a>
+    {% elif mode == 'view' %}
+        <a title="View" class="btn btn btn-outline-secondary btn-sm m-1" href="{{ url_for('forms.form_single_item', id=id, objectid=objectid) }}">{% include 'icons/view.svg' %}</a>
+
+    {% else %}
+        <a class="btn btn btn-outline-secondary btn-sm m-1" href="{{ url_for('forms.form_single_item_edit', id=id, objectid=objectid) }}">{% include 'icons/edit.svg' %}</a>
+        <a class="btn btn btn-outline-secondary btn-sm m-1" href="{{ url_for('forms.form_single_item', id=id, objectid=objectid) }}">{% include 'icons/view.svg' %}</a>
+    {% endif%}
 {% endmacro %}
