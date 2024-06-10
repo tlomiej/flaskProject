@@ -1,20 +1,13 @@
 {% extends "layout.html" %}
 {% block content%}
 {% import 'formsinglerecordnavigation.html' as macros_single_nav %}
+{% import 'meta_single_record_template.html' as render_metadata_template %}
 
 
 
     {% for f in form %}
         {{ macros_single_nav.render_single_row_nav(id, objectid, 'edit', 'main_form_data') }}
-                {% include 'formsinglerecordnavigation.html' %}
-                <div class="d-flex justify-content-around p-3">
-                    <small class="text-muted">FormId : {{id}}</small>
-                    <small class="text-muted">ObjectID : {{objectid}}</small>
-                    <small class="text-muted">Created: {{ meta[0].date_created.strftime('%Y-%m-%d') }}</small>
-                    <small class="text-muted">Author: {{ meta[0].author.username }}</small>
-                </div>
-
-
+        {{ render_metadata_template.render_metadata(id, objectid,  meta[0].date_created.strftime('%Y-%m-%d'), meta[0].author.username) }}
                 <article class="media content-section">
                   <div class="media-body">
                        {% for field in f %}

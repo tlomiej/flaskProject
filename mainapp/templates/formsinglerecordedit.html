@@ -1,11 +1,12 @@
 {% extends "layout.html" %}
 {% block content%}
 {% import 'formsinglerecordnavigation.html' as macros_single_nav %}
+{% import 'meta_single_record_template.html' as render_metadata_template %}
 
 
-    <p>FormId : {{id}}</p>
-    <p>ObjectID : {{objectid}}</p>
    {{ macros_single_nav.render_single_row_nav(id, objectid, 'view', 'main_form_data') }}
+   {{ render_metadata_template.render_metadata(id, objectid,  meta.date_created.strftime('%Y-%m-%d'), meta.author.username) }}
+
    <div class="content-section">
         <form method="POST" action="">
             {{ form.hidden_tag() }}

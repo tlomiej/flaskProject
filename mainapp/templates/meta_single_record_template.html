@@ -1,0 +1,8 @@
+   {% macro render_metadata(id, objectid, date_created, author) %}
+                <div class="d-flex justify-content-around p-3">
+                    <small class="text-muted">FormId : {{id}}</small>
+                    <small class="text-muted">ObjectID : {{objectid}}</small>
+                    <small class="text-muted">Created: {{ date_created }}</small>
+                    <small class="text-muted">Author: {{ author }}</small>
+                </div>
+   {% endmacro %}

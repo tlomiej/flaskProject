@@ -228,7 +228,8 @@ def form_single_item_edit(id, objectid):
 
     if check_type_json(request.args.get('type')):
         return jsonify({'info': "TODO"})
-    return render_template('formsinglerecordedit.html', title='Form', form=form, form_config=form_definition, id=id, objectid=objectid)
+
+    return render_template('formsinglerecordedit.html', title='Form', form=form, form_config=form_definition, id=id, objectid=objectid, meta=data)
 
 
 

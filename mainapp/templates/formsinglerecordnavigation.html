@@ -1,7 +1,6 @@
 
 {% macro render_single_row_nav(id, objectid, mode, home_form='main_form') %}
 
-{{objectid}}
  <a title="Return to form" class="btn btn btn-outline-secondary btn-sm m-1" href="{{ url_for('forms.form_view', id=id) }}">{% include 'icons/returnreturn.svg' %}
 </a>
 
