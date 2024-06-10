@@ -64,7 +64,9 @@ def new_form():
                 {"name": "title", "type": "StringField", "label": "Title", "validators": ["DataRequired"]},
                 {"name": "content", "type": "TextAreaField", "label": "Content", "validators": ["DataRequired"]},
                 {"name": "x", "type": "TextAreaField", "label": "X", "validators": ["DataRequired"]},
-                {"name": "y", "type": "TextAreaField", "label": "Y", "validators": ["DataRequired"]}
+                {"name": "y", "type": "TextAreaField", "label": "Y", "validators": ["DataRequired"]},
+                {"name": "radioelement", "type": "RadioField", "label": "Radio Field", "validators": ["DataRequired"],
+                  "choices": [["M","Male"],["F","Female"]]}
             ],
             "submit": {"label": "Add"}
         }
@@ -113,7 +115,9 @@ def form_add(id):
 
 
     data = Forms.query.filter_by(id=id).first_or_404()
+    print(data.form)
     form_definition = json.loads(data.form.replace("'", '"'))
+    print(form_definition)
     dynamicForm = create_form_class(form_definition)
     form = dynamicForm()
 

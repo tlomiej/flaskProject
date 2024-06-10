@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, TextAreaField
+from wtforms import StringField, SubmitField, TextAreaField, RadioField
 from wtforms.validators import DataRequired
 import json
 import copy
@@ -14,6 +14,7 @@ def create_form_class(form_definition):
         field_type = field['type']
         field_name = field['name']
         field_label = field['label']
+
         field_validators = [DataRequired() if v == "DataRequired" else None for v in field['validators']]
         field_validators = [v for v in field_validators if v is not None]
 
@@ -22,6 +23,11 @@ def create_form_class(form_definition):
             setattr(DynamicForm, field_name, StringField(field_label, validators=field_validators))
         elif field_type == "TextAreaField":
             setattr(DynamicForm, field_name, TextAreaField(field_label, validators=field_validators))
+        elif field_type == "RadioField":
+            data_str = field['choices']
+            field_choices = [tuple(x) for x in data_str]
+            setattr(DynamicForm, field_name, RadioField(field_label, validators=field_validators, choices=field_choices))
+
 
     # Add submit field
     setattr(DynamicForm, 'submit', SubmitField(form_definition['submit']['label']))
