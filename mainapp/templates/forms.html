@@ -2,16 +2,16 @@
 {% block content%}
     <div class="content-section">
             {% for data in data %}
-        <article class="media content-section">
-          <div class="media-body">
-            <div class="article-metadata">
-              <a class="mr-2" href="#">{{ data.id }}</a>
-              <small class="text-muted">{{ data.date_created.strftime('%Y-%m-%d') }}</small>
-            </div>
-            <h2><a class="article-title"  href="{{ url_for('forms.form_view', id=data.id) }}">{{ data.title }}</a></h2>
-            <p class="article-content">{{ data.description }}</p>
-          </div>
-        </article>
+            <article class="media content-section">
+              <div class="media-body">
+                <div class="article-metadata">
+                  <a class="mr-2" href="#">{{ data.id }}</a>
+                  <small class="text-muted">{{ data.date_created.strftime('%Y-%m-%d') }}</small>
+                </div>
+                <h2><a class="article-title"  href="{{ url_for('forms.form_view', id=data.id) }}">{{ data.title }}</a></h2>
+                <p class="article-content">{{ data.description }}</p>
+              </div>
+            </article>
     {% endfor %}
 
     </div>
