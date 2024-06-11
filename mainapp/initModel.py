@@ -1,4 +1,3 @@
-import bcrypt
 
 from mainapp import db, create_app
 from mainapp.models import User
