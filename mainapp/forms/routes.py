@@ -65,9 +65,9 @@ def new_form():
                 {"name": "content", "type": "TextAreaField", "label": "Content", "validators": ["DataRequired"]},
                 {"name": "x", "type": "TextAreaField", "label": "X", "validators": ["DataRequired"]},
                 {"name": "y", "type": "TextAreaField", "label": "Y", "validators": ["DataRequired"]},
-                {"name": "radioelement", "type": "RadioField", "label": "Radio Field", "validators": ["DataRequired"],
+                {"name": "radio_element", "type": "RadioField", "label": "Radio Field", "validators": ["DataRequired"],
                   "choices": [["M","Male"],["F","Female"]]},
-                {"name": "booolfield", "type": "BooleanField", "label": "Remember me",  "validators": []} 
+                {"name": "boool_field", "type": "BooleanField", "label": "Remember me",  "validators": []} 
             ],
             "submit": {"label": "Add"}
         }
