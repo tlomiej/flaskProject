@@ -15,8 +15,8 @@ def test_create_form(client):
                 {"name": "x", "type": "TextAreaField", "label": "X", "validators": ["DataRequired"]},
                 {"name": "y", "type": "TextAreaField", "label": "Y", "validators": ["DataRequired"]},
                 {"name": "radio_element", "type": "RadioField", "label": "Radio Field", "validators": ["DataRequired"],
-                  "choices": [["M","Male"],["F","Female"]]},
-                {"name": "boool_field", "type": "BooleanField", "label": "Remember me",  "validators": []}
+                  "choices": [["M", "Male"], ["F", "Female"]]},
+                {"name": "bool_field", "type": "BooleanField", "label": "Remember me",  "validators": []}
             ],
             "submit": {"label": "Add"}
         }
