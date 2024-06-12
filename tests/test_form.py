@@ -24,9 +24,9 @@ def test_create_form(client):
 
     }
 
-    email = "test@test.com"
-    password = "Pa$$4App"
-    username = "testUser123"
+    email = "test11@test.com"
+    password = "Pa$$4App111"
+    username = "testUser123111"
 
     client.post("/register", data={"email": email,
                                    "password": password,

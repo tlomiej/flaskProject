@@ -1,5 +1,6 @@
 import pytest
 from mainapp import create_app, db
+from playwright.sync_api import sync_playwright
 
 
 
@@ -20,3 +21,11 @@ def app():
 @pytest.fixture()
 def client(app):
     return app.test_client()
+
+# @pytest.fixture(scope="module")
+# def browser():
+#     with sync_playwright() as p:
+#         browser = p.chromium.launch(headless=False)
+#         yield browser
+#         browser.close()
+#
