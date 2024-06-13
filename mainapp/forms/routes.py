@@ -116,9 +116,7 @@ def form_add(id):
 
 
     data = Forms.query.filter_by(id=id).first_or_404()
-    print(data.form)
     form_definition = json.loads(data.form.replace("'", '"'))
-    print(form_definition)
     dynamicForm = create_form_class(form_definition)
     form = dynamicForm()
 
@@ -131,7 +129,7 @@ def form_add(id):
 
         flash('Data add to db!', 'success')
         return redirect(url_for('forms.form_view', id=id))
-    return render_template('form.html', title='Form', form=form, form_config=form_definition)
+    return render_template('form.html', title=data.title, description=data.description, form=form, form_config=form_definition)
 
 @forms.route("/forms/<id>/edit", methods=['GET', 'POST'])
 @login_required
