@@ -7,3 +7,4 @@ Easy to implement by Docker
 
 # TODO
 - add mobile css
+- add GUI to creatr forms
